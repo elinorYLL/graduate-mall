@@ -40,14 +40,21 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* .slider-img {
   padding-top: 54px;
 } */
-.van-swipe {
-  height: 180px;
-  width: 350px;
+.g-slider-container {
+  width: 90%;
   margin: 0 auto;
+  margin-top: 60px;
+  height: 151px;
+  overflow: hidden;
+}
+.van-swipe {
+  height: 100%;
+  width: 100%;
+  /* margin: 0 auto; */
 }
 .slider-img {
   display: inline-block;

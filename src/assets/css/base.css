@@ -15,8 +15,8 @@ a {
 a:active {
   color: #de181b;
 }
-html, body {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
+/* html, body { */
+  /* overflow: hidden; */
+  /* width: 100%;
+  height: 100%; */
+/* } */

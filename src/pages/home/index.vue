@@ -3,28 +3,42 @@
     <header class="g-header-container">
       <home-header></home-header>
     </header>
-    <div class="g-slider-container">
-      <home-slider></home-slider>
-    </div>
+    <!-- <me-scroll class="g-slider-container">
+      <home-slider slot="header"></home-slider>
+      <me-nav slot="center"></me-nav>
+      <home-recommend slot="footer"></home-recommend>
+    </me-scroll> -->
+    <home-slider class="g-slider-container"></home-slider>
+    <me-nav></me-nav>
+    <home-recommend></home-recommend>
     <router-view></router-view>
   </div>
 </template>
 <script>
 import HomeHeader from "./header.vue";
 import HomeSlider from "./slider.vue";
+import MeScroll from "../../base/scroll/index.vue";
+import MeNav from "./nav.vue";
+import HomeRecommend from "./recommend.vue";
+import Vue from "vue";
+import { List } from "vant";
+Vue.use(List);
 export default {
   name: "Home",
   components: {
     HomeHeader,
-    HomeSlider
+    HomeSlider,
+    MeScroll,
+    MeNav,
+    HomeRecommend
   }
 };
 </script>
-<style>
+<style scoped>
 .home {
   overflow: hidden;
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  /* height: 100%; */
   background-color: #f5f5f5;
 }
 .g-header-container {
@@ -34,12 +48,15 @@ export default {
   z-index: 1000;
   width: 100%;
 }
-.g-slider-container {
+/* .g-slider-container {
   position: absolute;
   top: 54px;
   width: 350px;
   left: 50%;
   margin-left: -175px;
   height: 180px;
+} */
+.g-slider-container {
+  margin-top: 54px;
 }
 </style>

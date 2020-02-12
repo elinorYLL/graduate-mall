@@ -9,7 +9,7 @@ import "./assets/css/base.css";
 import "./assets/css/reset.css";
 import fastclick from "fastclick";
 import "vant/lib/index.css";
-Vue.use(Vant);
+
 Vue.config.productionTip = false;
 
 fastclick.attach(document.body);
