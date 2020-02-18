@@ -1,23 +1,10 @@
 <template>
   <div class="recommend">
-    <van-divider
-      :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }"
-      >精选</van-divider
-    >
+    <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">精选</van-divider>
     <ul class="recommend-list">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <li class="recommend-item" v-for="(item, index) in s" :key="index">
-          <van-row
-            class="recommend-icon"
-            type="flex"
-            justify="center"
-            align="center"
-          >
+          <van-row class="recommend-icon" type="flex" justify="center" align="center">
             <van-col span="20">
               <van-icon name="close" />
               <router-link class="recommend-link" to="/">
@@ -27,9 +14,7 @@
                 <p class="recommend-name">{{ item.name }}</p>
                 <p class="recommend-origPrice"><del>¥2599</del></p>
                 <p class="recommend-info">
-                  <span class="recommend-price"
-                    >¥2599<strong class="recommend-price-num"></strong
-                  ></span>
+                  <span class="recommend-price">¥2599<strong class="recommend-price-num"></strong></span>
                 </p>
               </router-link>
             </van-col>
@@ -49,7 +34,7 @@ Vue.use(Divider)
   .use(Overlay);
 export default {
   name: "HomeRecommend",
-  data() {
+  data () {
     return {
       s: [],
       show: false,
@@ -62,7 +47,7 @@ export default {
   //   picUrl: require("./9.jpg")
   // }
   methods: {
-    onLoad() {
+    onLoad () {
       setTimeout(() => {
         for (let i = 0; i < 10; i++) {
           this.s.push({ name: "mi9", picUrl: require("./9.jpg") });

@@ -7,14 +7,14 @@ const routes = [
   {
     name: "home",
     path: "/home",
-    component: () => import("../pages/home"),
-    children: [
-      {
-        name: "home-product",
-        path: "product/:id",
-        component: () => import("../pages/product")
-      }
-    ]
+    component: () => import("../pages/home")
+    // children: [
+    //   {
+    //     name: "home-product",
+    //     path: "product/:id",
+    //     component: () => import("../pages/product")
+    //   }
+    // ]
   },
   {
     name: "category",
@@ -35,6 +35,11 @@ const routes = [
     name: "search",
     path: "/search",
     component: () => import("../pages/search")
+  },
+  {
+    name: "product",
+    path: "/product/:id",
+    component: () => import("../pages/product")
   },
   {
     path: "*",
