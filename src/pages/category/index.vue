@@ -17,12 +17,21 @@
 import CContent from "./content.vue";
 import CHeader from "./header.vue";
 import CTab from "./tab.vue";
+
 export default {
   name: "Category",
   components: {
     CContent,
     CHeader,
     CTab
+  },
+  data(){
+    return{
+    
+    }
+  },
+  methods:{
+   
   }
 };
 </script>

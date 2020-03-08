@@ -9,6 +9,7 @@ import "./assets/css/base.css";
 import "./assets/css/reset.css";
 import fastclick from "fastclick";
 import "vant/lib/index.css";
+import store from './store';
 
 Vue.config.productionTip = false;
 
@@ -17,6 +18,7 @@ fastclick.attach(document.body);
 new Vue({
   el: "#app",
   router,
+  store,
   components: { App },
   template: "<App/>"
 });

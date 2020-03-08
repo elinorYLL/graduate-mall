@@ -1,19 +1,22 @@
 <template>
   <div>
-    <van-swipe :autoplay="3000">
+   <van-pull-refresh v-model="isLoading" @refresh="onRefresh(-1)">
+      <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <a :href="image.linkUrl" class="slider-link"></a>
         <img v-lazy="image.picUrl" class="slider-img" />
       </van-swipe-item>
     </van-swipe>
+   </van-pull-refresh>
   </div>
 </template>
 <script>
 import Vue from "vue";
-import { Swipe, SwipeItem, Lazyload } from "vant";
+import { Swipe, SwipeItem, Lazyload,PullRefresh} from "vant";
 Vue.use(Swipe)
   .use(SwipeItem)
-  .use(Lazyload);
+  .use(Lazyload)
+  .use(PullRefresh);
 export default {
   name: "HomeSlider",
   data() {
@@ -35,8 +38,15 @@ export default {
           linkUrl: "https://www.baidu.com",
           picUrl: require("./4.jpg")
         }
-      ]
+      ],
+      isLoading:''
     };
+  },
+  methods:{
+    onRefresh(){
+      this.finished=false;
+      
+    }
   }
 };
 </script>

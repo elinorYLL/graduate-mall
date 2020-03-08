@@ -3,11 +3,6 @@
     <header class="g-header-container">
       <home-header></home-header>
     </header>
-    <!-- <me-scroll class="g-slider-container">
-      <home-slider slot="header"></home-slider>
-      <me-nav slot="center"></me-nav>
-      <home-recommend slot="footer"></home-recommend>
-    </me-scroll> -->
     <home-slider class="g-slider-container"></home-slider>
     <me-nav></me-nav>
     <home-recommend></home-recommend>
@@ -21,10 +16,22 @@ import MeScroll from "../../base/scroll/index.vue";
 import MeNav from "./nav.vue";
 import HomeRecommend from "./recommend.vue";
 import Vue from "vue";
-import { List } from "vant";
+import { List} from "vant";
+
 Vue.use(List);
 export default {
   name: "Home",
+  data(){
+    return{
+      recommends:[],
+
+    }
+  },
+  created(){
+  },
+  methods:{
+
+  },
   components: {
     HomeHeader,
     HomeSlider,

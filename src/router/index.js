@@ -42,6 +42,52 @@ const routes = [
     component: () => import("../pages/product")
   },
   {
+    name:"comment",
+    path:"/comment/:id",
+    component:()=>import("../pages/comment")
+  },
+  {
+      name:"login",
+      path:"/login",
+      component:()=>import("../pages/login")
+  },
+  {
+    name:"register",
+    path:"/register",
+    component:()=>import("../pages/register")
+  },
+  {
+    name:"order",
+    path:"/order",
+    component:()=>import("../pages/order")
+  },
+  {
+    name:"setting",
+    path:"/setting",
+    component:()=>import("../pages/setting")
+  },
+  {
+    name:'ade',
+    path:'/ade',
+    component:()=>import("../pages/address-edit")
+  },
+  {
+    name:'new',
+    path:'/new',
+    component:()=>import("../pages/newAddress")
+  },
+  {
+    name:'self-comment',
+    path:'/self-comment',
+    component:()=>import("../pages/self-comment")
+  },
+  {
+    name:'order-detail',
+    path:'/order-detail',
+    component:()=>import("../pages/order-detail")
+  }
+  ,
+  {
     path: "*",
     redirect: "/home"
   }

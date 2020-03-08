@@ -10,142 +10,96 @@
         </a>
       </div>
       <div class="section">
-        <!-- <h4 class="section-title">手机</h4> -->
         <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }" class="section-title">
           手机
         </van-divider>
         <ul class="section-list">
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
+          <li class="section-item"  v-for='(item,index) in content' :key="index">
+           <router-link :to="{name:'product',params:{id:item.id}}">
+              <a href="#" class="section-link">
+              <img src="http://localhost:8083/9.jpg" class="section-img">
             </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
-          </li>
-          <li class="section-item">
-
-            <a href="#" class="section-link">
-              <img src="./mi9.jpg" class="section-img">
-            </a>
-            <p class="section-name"></p>
+            <p class="section-name">{{item.name}}</p>
+           </router-link>
           </li>
         </ul>
       </div>
 
     </div>
+    <!-- <p>这是从tab接手过来的id：{{msg}}</p> -->
   </div>
 </template>
 <script>
 import Vue from 'vue';
 import { Loading, Divider } from 'vant';
+import {getCategoryContent} from '../../api/category-content.js';
+import {CATEGORY_PAGE_SIZE} from '../../api/config.js'
+import bus from '../../assets/js/eventBus.js'
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 Vue.use(Loading)
   .use(Divider);
 export default {
   name: "CContent",
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      tabId:'',
+      content:[],
+      curPage:1,
+      totalPage:1,
+      pageSize:CATEGORY_PAGE_SIZE
+    }
+  },
+  mounted(){
+         var self=this;
+           bus.$on("TabId",function(tabId){
+           self.tabId=tabId;
+    });
+    console.log(this.msg)
+    // 
+    
+    getCategoryContent(1,this.pageSize,this.msg).then(result=>{
+      if(result)
+      {
+          this.content=this.content.concat(result.data.records);
+      }
+    })
+  },
+  // https://blog.csdn.net/weixin_41187842/article/details/90264889
+  //https://www.cnblogs.com/ilovexiaoming/p/11352768.html 对传过来的tabId进行监听才可以有效获得id
+  watch:{
+    tabId:'getTabContent'
+  },
+  methods:{
+    getTabContent(curVal,oldVal){
+      this.content=[];
+      this.curPage=1;
+      this.totalPage=1;
+      if(this.curPage>this.totalPage)
+      return;
+      getCategoryContent(this.curPage,this.pageSize,curVal).then(result=>{
+        if(result)
+        {
+          this.curPage++;
+          this.totalPage=result.data.pages;
+          this.content=this.content.concat(result.data.records);
+          console.log(this.content);
+        }
+      })
+    }
+    },
+    computed:{
+    msg:{
+       get(){
+        return this.$store.state.categoryTab.tabFirstId
+      },
+      set(){
+           
+      }
     }
   }
-};
+
+  }
 </script>
 <style scoped>
 .content-wrapper {
@@ -195,10 +149,19 @@ export default {
   margin: 10px 4%;
 }
 .section-link {
+  display: inline-block;
   width: 100%;
-  height: 100%;
+  height: 54px;
+  overflow: hidden;
 }
 .section-img {
   width: 100%;
+  height: 100%;
+}
+.section-name{
+  text-align: center;
+}
+.van-popup--top{
+  display: none !important;
 }
 </style>

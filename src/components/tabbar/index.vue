@@ -16,6 +16,7 @@
     </van-tabbar>
   </div>
 </template>
+
 <script>
 import Vue from "vue";
 import { Tabbar, TabbarItem, Icon } from "vant";
@@ -27,13 +28,21 @@ export default {
   data() {
     return {
       active: "home"
-    };
+    }
+    },
+    created(){
+      console.log(this.$route);
+     if (this.$route.name == "home") {
+      this.active = 'home';
+    } else if (this.$route.name == "search") {
+      this.active = 'search';
+    } else if (this.$route.name == "friends") {
+      this.active = 'friends';
+    }else if(this.$route.name=="setting"){
+      this.active='setting'
+    }
   }
 };
 </script>
 <style>
-/* .van-icon,
-.van-icon-setting-o {
-  font-size: 40px;
-} */
 </style>

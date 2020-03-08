@@ -1,20 +1,31 @@
 <template>
+<!-- https://www.cnblogs.com/sese/p/11897195.html -->
+<!-- 上拉加载更多实现参考 -->
   <div class="recommend">
     <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">精选</van-divider>
     <ul class="recommend-list">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <li class="recommend-item" v-for="(item, index) in s" :key="index">
+      <van-list 
+      v-model="loading" 
+      :finished="finished" 
+      finished-text="没有更多了" 
+      @load="onLoad"
+      :offset="10">
+      <!-- 这里放我的数据 -->
+        <li class="recommend-item" v-for="(item, index) in recommend" :key="index">
           <van-row class="recommend-icon" type="flex" justify="center" align="center">
             <van-col span="20">
               <van-icon name="close" />
-              <router-link class="recommend-link" to="/">
-                <p class="recommend-pic">
+              <router-link class="recommend-link" to="{name:'product'},params:{id:item.id}">
+                <!-- <p class="recommend-pic">
                   <img class="recommend-img" v-lazy="item.picUrl" />
+                </p> -->
+                <p class="recommend-pic">
+                  <img class="recommend-img" src="http://localhost:8083/9.jpg"/>
                 </p>
                 <p class="recommend-name">{{ item.name }}</p>
                 <p class="recommend-origPrice"><del>¥2599</del></p>
                 <p class="recommend-info">
-                  <span class="recommend-price">¥2599<strong class="recommend-price-num"></strong></span>
+                  <span class="recommend-price">¥{{item.shopPrice}}<strong class="recommend-price-num"></strong></span>
                 </p>
               </router-link>
             </van-col>
@@ -27,6 +38,7 @@
 <script>
 import Vue from "vue";
 import { Divider, Col, Row, Icon, Overlay } from "vant";
+import {getHomeRecommend} from '../../api/home.js';
 Vue.use(Divider)
   .use(Col)
   .use(Row)
@@ -38,25 +50,43 @@ export default {
     return {
       s: [],
       show: false,
-      loading: false,
-      finished: false
+      loading: false,//是否加载状态
+      finished: false,//是否架子啊完所有数据
+      recommend:[],
+      curPage:1,//请求第几页
+      totalPage:1//总共数据页数
     };
   },
-  // {
-  //   name: "mi9",
-  //   picUrl: require("./9.jpg")
-  // }
+  created(){
+    // 创建组件时，加载第一页数据
+    this.getRecommend();
+  },
   methods: {
     onLoad () {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.s.push({ name: "mi9", picUrl: require("./9.jpg") });
+     setTimeout(()=>{
+        this.curPage++;
+        this.getRecommend();
+     },1000);
+    },
+    getRecommend(){
+      if(this.curPage>this.totalPage)
+      {
+        this.finished=true;
+        return;
+        //加载结束
+      }
+      getHomeRecommend(this.curPage).then(result=>{
+        if(result)
+        {
+          this.loading=false;
+          console.log(result.data);
+          this.totalPage=result.data.pages;
+          this.recommend=this.recommend.concat(result.data.records);
+          console.log(this.recommend);
+
         }
-        this.loading = false;
-        if (this.s.length >= 20) {
-          this.finished = true;
-        }
-      }, 1000);
+
+      })
     }
   }
 };
@@ -78,8 +108,14 @@ export default {
   border: 1px solid white;
   background-color: white;
 }
+.recommend-pic{
+  padding-top: 20px;
+  height: 131px;
+  width: 98%;
+  overflow: hidden;
+}
 .recommend-img {
-  margin-top: 20px;
+
   width: 100%;
   height: 100%;
 }
