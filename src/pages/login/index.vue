@@ -1,9 +1,9 @@
 <template>
-  <div class="login" @touchmove.prevent>
+  <div class="login"  @touchmove.prevent>
     <van-icon name="arrow-left" size="30" color="rgba(220, 220, 220)"/>
-    <div class="login-header">
+    <!-- <div class="login-header">
         <img src="./mi9.jpg">
-    </div>
+    </div> -->
       <div class="login-main">
            <van-form @submit="onSubmit">
   <van-field
@@ -55,17 +55,30 @@ export default {
 <style scoped>
 .login{
   height:100vh;
+  width: 100vw;
+
   background-color:white;
   overflow:hidden;
-  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("./background.jpg");
 }
+
 .login .login-header{
   width:60%;
   height:100px;
   margin:50px auto;
 }
-.login .login-header img{
-  width:100%;
-  height:100%;
+.login .login-main {
+  width: 90%;
+  height: 300px;
+  background-color: 	#F5F5F5;
+  border-radius: 10px;
+  margin: 190px auto;
+}
+.login .login-main .van-form{
+  padding-top: 20px;
+  width: 90%;
+  margin: 0 auto;
 }
 </style>

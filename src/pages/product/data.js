@@ -18,8 +18,8 @@ export default {
             name: "白色"
           }
         ],
-        k_s: "s1",
-        count: 2
+        k_s: "s1"
+        // count: 2
       },
       {
         k: "尺寸",
@@ -34,8 +34,8 @@ export default {
             name: "2"
           }
         ],
-        k_s: "s2",
-        count: 2
+        k_s: "s2"
+        // count: 2
       }
     ],
     // 所有 sku 的组合列表，如下是：白色1、白色2、天蓝色1、天蓝色2
@@ -43,9 +43,10 @@ export default {
       {
         id: 2259,
         price: 120, //价格
-        discount: 122,
         s1: "1215",
+        //白色的id
         s2: "1193",
+        //尺寸1的id
         s3: "0",
         s4: "0",
         s5: "0",
@@ -55,9 +56,10 @@ export default {
       {
         id: 2260,
         price: 110,
-        discount: 112,
         s1: "1215",
+        //白色的id
         s2: "1194",
+        //尺寸2的id
         s3: "0",
         s4: "0",
         s5: "0",
@@ -66,10 +68,12 @@ export default {
       },
       {
         id: 2257,
-        price: 130,
-        discount: 132,
+        price: 150,
+        // discount: 132,
         s1: "30349",
+        //蓝色的id
         s2: "1193",
+        //尺寸1的id
         s3: "0",
         s4: "0",
         s5: "0",
@@ -79,7 +83,6 @@ export default {
       {
         id: 2258,
         price: 100,
-        discount: 100,
         s1: "30349",
         s2: "1194",
         s3: "0",
@@ -101,10 +104,5 @@ export default {
     title: "测试商品A",
     picture:
       "https://img.yzcdn.cn/upload_files/2017/03/16/Fs_OMbSFPa183sBwvG_94llUYiLa.jpeg?imageView2/2/w/100/h/100/q/75/format/jpg"
-  },
-  initialSku: {
-    s1: "0001",
-    s2: "1001",
-    selectedNum: 3
   }
 };

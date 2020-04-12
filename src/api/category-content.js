@@ -1,23 +1,21 @@
 import axios from 'axios';
-import {SUCC_CODE,CATEGORY_PAGE_SIZE,TIMEOUT} from './config';
+import {SUCC_CODE,TIMEOUT} from './config';
 
 const CancelToken = axios.CancelToken;
 let cancel;
 //获取内容数据（根据侧边栏选项）
 //取消前一次请求失败...
-export const getCategoryContent=(currentPage=1,pageSize=CATEGORY_PAGE_SIZE,brandId)=>{
+export const getCategoryContent=(brandId)=>{
     cancel && cancel('取消了前一次的请求！');
     cancel = null;
     var json={
-        "currentPage":currentPage,
-        "pageSize":pageSize,
         "brandId":brandId
-    }
+    };
     console.log(json);
     return axios({
         method:"POST",
         timeout:TIMEOUT,
-        url:'http://localhost:8089/spu/getPage',
+        url:'http://localhost:8089/spu/list',
         data:json,
         cancelToken: new CancelToken(function executor(c) {
             cancel = c;

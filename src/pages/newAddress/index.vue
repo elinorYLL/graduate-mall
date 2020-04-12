@@ -7,7 +7,7 @@
              <p>&nbsp;&nbsp;添加收货地址</p>
         </div>
         <van-address-edit
-  :area-list="areaList"
+      :area-list="areaList"
   show-postal
   show-delete
   show-set-default
@@ -23,6 +23,7 @@
 <script>
 import Vue from 'vue';
 // import areaList from './area.json'
+import areaList from '../../assets/js/area.js'
 import { AddressEdit ,Toast,Area} from 'vant';
 Vue.use(AddressEdit)
    .use(Area);

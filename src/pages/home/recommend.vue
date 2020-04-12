@@ -14,19 +14,16 @@
         <li class="recommend-item" v-for="(item, index) in recommend" :key="index">
           <van-row class="recommend-icon" type="flex" justify="center" align="center">
             <van-col span="20">
-              <van-icon name="close" />
-              <router-link class="recommend-link" to="{name:'product'},params:{id:item.id}">
-                <!-- <p class="recommend-pic">
-                  <img class="recommend-img" v-lazy="item.picUrl" />
-                </p> -->
+              <van-icon name="close" @click="closeIcon(item.id)"/>
+              <router-link class="recommend-link" :to="{name:'product',params:{id:item.id}}">
                 <p class="recommend-pic">
-                  <img class="recommend-img" src="http://localhost:8083/9.jpg"/>
+                    <img class="recommend-img" v-lazy="item.pictures[0].url" v-if="item.pictures.length!=0"/>
                 </p>
                 <p class="recommend-name">{{ item.name }}</p>
-                <p class="recommend-origPrice"><del>¥2599</del></p>
                 <p class="recommend-info">
                   <span class="recommend-price">¥{{item.shopPrice}}<strong class="recommend-price-num"></strong></span>
                 </p>
+                <p class="recommend-name">{{ item.briefIntro }}</p>
               </router-link>
             </van-col>
           </van-row>
@@ -54,7 +51,8 @@ export default {
       finished: false,//是否架子啊完所有数据
       recommend:[],
       curPage:1,//请求第几页
-      totalPage:1//总共数据页数
+      totalPage:1,//总共数据页数
+      userShow:"1"
     };
   },
   created(){
@@ -75,18 +73,30 @@ export default {
         return;
         //加载结束
       }
-      getHomeRecommend(this.curPage).then(result=>{
+      getHomeRecommend(this.curPage,"1").then(result=>{
         if(result)
         {
           this.loading=false;
+          console.log('llllllllllllll')
           console.log(result.data);
           this.totalPage=result.data.pages;
           this.recommend=this.recommend.concat(result.data.records);
           console.log(this.recommend);
-
         }
 
       })
+    },
+    closeIcon(id){
+      console.log('---');
+      // console.log(this.recommend);
+      console.log(id);
+        for(var i=0;i<this.recommend.length;i++){
+          if(this.recommend[i].id==id){
+            this.recommend.splice(i,1);
+             console.log("s"+id);
+          }
+        }
+         console.log(this.recommend);
     }
   }
 };
@@ -99,8 +109,9 @@ export default {
   /* border: 1px solid red; */
 }
 .recommend-item {
-  width: 45%;
-  margin: 2%;
+  width: 46%;
+  margin: 1%;
+  height: 250px;
   /* float: left; */
   display: inline-block;
   /* margin: 10px; */
@@ -110,12 +121,11 @@ export default {
 }
 .recommend-pic{
   padding-top: 20px;
-  height: 131px;
+  height: 150px;
   width: 98%;
   overflow: hidden;
 }
 .recommend-img {
-
   width: 100%;
   height: 100%;
 }

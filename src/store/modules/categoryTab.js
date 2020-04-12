@@ -27,22 +27,3 @@ export default {
    mutations,
    actions
 }
-// export default category-tab
-
-// const categoryTab={
-//     state:{
-//         tabFirstId:0
-//     },
-//     mutations:{
-//     SetTabFirstId(state,id) {   //自定义改变state初始值的方法，这里面的参数除了state之外还可以再传额外的参数(变量或对象),同步设置
-//        state.tabFirstId = id;
-//    }
-//     },
-//     getters:{
-//     GetTabFirstId(state) {  //承载变化的showFooter的值
-//       return state.tabFirstId
-//    } 
-//   },
-//   actions:{}
-// }
-// export default categoryTab

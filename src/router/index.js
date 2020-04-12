@@ -85,14 +85,19 @@ const routes = [
     name:'order-detail',
     path:'/order-detail',
     component:()=>import("../pages/order-detail")
-  }
-  ,
+  },
   {
     path: "*",
     redirect: "/home"
   }
 ];
 
+
 export default new Router({
-  routes
+  routes,
+  scrollBehavior(to,from,savedPosition){
+    return {x:0,y:0}
+  }
 });
+//打开页面。不是在最顶
+// https://blog.csdn.net/zhangxiaodui/article/details/102589290

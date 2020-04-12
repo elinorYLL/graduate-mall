@@ -6,7 +6,7 @@
     <div class="content">
       <div class="pic">
         <a href="#" class="pic-link">
-          <img src="./mi9.jpg" class="pic-img">
+          <img :src='picUrl' class="pic-img">
         </a>
       </div>
       <div class="section">
@@ -17,21 +17,20 @@
           <li class="section-item"  v-for='(item,index) in content' :key="index">
            <router-link :to="{name:'product',params:{id:item.id}}">
               <a href="#" class="section-link">
-              <img src="http://localhost:8083/9.jpg" class="section-img">
+              <img :src="item.pictures.url" class="section-img">
             </a>
             <p class="section-name">{{item.name}}</p>
            </router-link>
           </li>
         </ul>
       </div>
-
     </div>
-    <!-- <p>这是从tab接手过来的id：{{msg}}</p> -->
+    <!-- <p>这是从tab接手过来的item：{{tabItem}}</p> -->
   </div>
 </template>
 <script>
 import Vue from 'vue';
-import { Loading, Divider } from 'vant';
+import {Loading, Divider } from 'vant';
 import {getCategoryContent} from '../../api/category-content.js';
 import {CATEGORY_PAGE_SIZE} from '../../api/config.js'
 import bus from '../../assets/js/eventBus.js'
@@ -40,57 +39,74 @@ Vue.use(Loading)
   .use(Divider);
 export default {
   name: "CContent",
+
   data () {
     return {
+      indexOfPic:0,
       isLoading: false,
-      tabId:'',
+      tabItem:'',
+      picUrl:'',
       content:[],
       curPage:1,
       totalPage:1,
-      pageSize:CATEGORY_PAGE_SIZE
+      BannerPic:[],
+      pageSize:CATEGORY_PAGE_SIZE,
+
     }
   },
   mounted(){
          var self=this;
-           bus.$on("TabId",function(tabId){
-           self.tabId=tabId;
+         bus.$on("TabItem",function(tabItem){
+           self.tabItem=tabItem;
+           self.picUrl=tabItem.pictures[0].url;
     });
+    console.log('msg');
     console.log(this.msg)
     // 
-    
-    getCategoryContent(1,this.pageSize,this.msg).then(result=>{
-      if(result)
-      {
-          this.content=this.content.concat(result.data.records);
-      }
-    })
+      getCategoryContent(this.msg).then(result=>{
+        if(result)
+        {
+          this.content=result.data;  
+          this.content.forEach(res=>{
+            res.pictures=res.pictures[0];
+          })
+          console.log('hhh')
+           console.log(this.content);
+          //  this.$forceUpdate();
+        }
+      })
   },
   // https://blog.csdn.net/weixin_41187842/article/details/90264889
   //https://www.cnblogs.com/ilovexiaoming/p/11352768.html 对传过来的tabId进行监听才可以有效获得id
   watch:{
-    tabId:'getTabContent'
+    tabItem:'getTabContent'
   },
   methods:{
     getTabContent(curVal,oldVal){
+      console.log('change')
+      console.log(curVal);
       this.content=[];
-      this.curPage=1;
-      this.totalPage=1;
-      if(this.curPage>this.totalPage)
-      return;
-      getCategoryContent(this.curPage,this.pageSize,curVal).then(result=>{
+      getCategoryContent(curVal.id).then(result=>{
         if(result)
         {
-          this.curPage++;
-          this.totalPage=result.data.pages;
-          this.content=this.content.concat(result.data.records);
-          console.log(this.content);
+          this.content=result.data;  
+          this.content.forEach(res=>{
+            res.pictures=res.pictures[0];
+          })
+          console.log('hhh')
+           console.log(this.content);
+    
         }
       })
+    },
+    pic(item){
+      console.log('hhh');
+      console.log(item.pictures);
     }
     },
     computed:{
     msg:{
-       get(){
+      get(){
         return this.$store.state.categoryTab.tabFirstId
       },
       set(){
@@ -98,7 +114,6 @@ export default {
       }
     }
   }
-
   }
 </script>
 <style scoped>

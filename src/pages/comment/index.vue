@@ -1,105 +1,45 @@
 <template>
     <div class="comment">
         <div class="head">
-          <router-link to="/product/1">
+            <!-- :to="{name:'comment',params:{id:this.id}} -->
+          <router-link :to="{name:'product',params:{id:this.id}}">
+
                 <van-icon name="arrow-left" size="30" color="rgba(220, 220, 220)" class="comment-icon"/>
           </router-link>
             &nbsp;&nbsp;&nbsp;&nbsp;商品评价
         </div>
-        <van-tabs type="card">
+        <van-tabs type="card" @click="onClick">
             <van-tab title="全部">
-                <div class="comment-show">
+                <div class="comment-show" v-for="(item,index) in comment" :key="index">
                     <div class="comment-head">
-                        <img src="./mi9.jpg" alt="">
+                        <img :src="item.userPic[0].url">
                     </div>
                   <div class="comment-right">
-                        <p class="comment-name">潘浩</p>
-                    <p class="comment-content">小米9不错，我最喜欢就是小爱同学和门禁卡功能了，太喜欢了。</p>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                  </div>
-                </div>
-                 <div class="comment-show">
-                    <div class="comment-head">
-                        <img src="./mi9.jpg" alt="">
-                    </div>
-                  <div class="comment-right">
-                        <p class="comment-name">潘浩</p>
-                    <p class="comment-content">小米9不错，我最喜欢就是小爱同学和门禁卡功能了，太喜欢了。</p>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                  </div>
-                </div>
-                 <div class="comment-show">
-                    <div class="comment-head">
-                        <img src="./mi9.jpg" alt="">
-                    </div>
-                  <div class="comment-right">
-                        <p class="comment-name">潘浩</p>
-                    <p class="comment-content">小米9不错，我最喜欢就是小爱同学和门禁卡功能了，太喜欢了。</p>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                  </div>
-                </div>
-                 <div class="comment-show">
-                    <div class="comment-head">
-                        <img src="./mi9.jpg" alt="">
-                    </div>
-                  <div class="comment-right">
-                        <p class="comment-name">潘浩</p>
-                    <p class="comment-content">小米9不错，我最喜欢就是小爱同学和门禁卡功能了，太喜欢了。</p>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                  </div>
-                </div>
-                 <div class="comment-show">
-                    <div class="comment-head">
-                        <img src="./mi9.jpg" alt="">
-                    </div>
-                  <div class="comment-right">
-                        <p class="comment-name">潘浩</p>
-                    <p class="comment-content">小米9不错，我最喜欢就是小爱同学和门禁卡功能了，太喜欢了。</p>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
-                    </div>
-                    <div class="comment-img">
-                        <img src="./mi9.jpg" class="c-IMG" @click="getImg()">
+                        <p class="comment-name">{{item.user.name}}</p>
+                    <p class="comment-content">{{item.content}}</p>
+                    <div class="comment-img" v-for="(pic,picIndex) in item.pictures" :key="picIndex">
+                        <img :src="pic.url" class="c-IMG" @click="getImg(pic.url)">
                     </div>
                   </div>
                 </div>
                 </van-tab>
-            <van-tab title="有图">内容 2</van-tab>
+            <van-tab title="有图">
+                 <div class="comment-show" v-for="(item,index) in picComment" :key="index" v-if="picComment.length!=0">
+                    <div class="comment-head">
+                        <img :src="item.userPic[0].url">
+                    </div>
+                  <div class="comment-right">
+                        <p class="comment-name">{{item.user.name}}</p>
+                    <p class="comment-content">{{item.content}}</p>
+                    <div class="comment-img" v-for="(pic,picIndex) in item.pictures" :key="picIndex">
+                        <img :src="pic.url" class="c-IMG" @click="getImg(pic.url)">
+                    </div>
+                  </div>
+                </div>
+                <div v-if="picComment.length==0">
+                        暂无内容
+                </div>
+            </van-tab>
             <van-tab title="质量不错">内容 3</van-tab>
             <van-tab title="良心产品">内容 4</van-tab>
             <van-tab title="服务周到">内容 5</van-tab>
@@ -110,16 +50,61 @@
 <script>
 import Vue from 'vue';
 import { Tab, Tabs,ImagePreview } from 'vant';
+import {getComment} from '../../api/getComment.js';
+import {getCommentWithPic} from '../../api/getCommentWithPic.js';
 Vue.use(Tab)
     .use(Tabs)
     .use(ImagePreview);
 export default {
-    methods:{
-        getImg(){
-            ImagePreview(
-               [ require("./mi9.jpg")]
-                )
+    data(){
+        return{
+            id:'',
+            comment:[],
+            picComment:[]
         }
+    },
+    methods:{
+        getImg(url){
+            ImagePreview(
+            //    [ require("./mi9.jpg")]
+            [url]
+                )
+        },
+        getCommentList(){
+            getComment(this.id).then(res=>{
+                if(res)
+                {
+                    console.log(res);
+                    this.comment=res.data.comments;
+                    console.log(this.comment);
+                }
+            })
+        },
+        getCommentWithPicList(){
+            console.log('我是被点击了的');
+            getCommentWithPic(this.id).then(res=>{
+                if(res){
+                    console.log(res);
+                }
+            })
+        },
+        onClick(name,title){
+            if(title=="有图")
+            {
+                 getCommentWithPic(this.id).then(res=>{
+                if(res){
+                    console.log(res);
+                    this.picComment=res.data.comments;
+                    console.log(this.picComment);
+                }
+            })
+            }
+        }
+    },
+    created(){
+       this.id= this.$route.params.id;
+       console.log(this.id);
+       this.getCommentList()
     }
 }
 </script>
@@ -206,11 +191,15 @@ export default {
     height: 90px;
     display: inline-block;
     padding-bottom: 10px;
+    overflow: hidden;
 }
 .comment .c-IMG{
+    /* display:inline-block; */
     width: 100%;
     height: 100%;
-
+    /* margin-right: 10px; */
+    float: left;
+    padding:10px;
 }
 
 </style>

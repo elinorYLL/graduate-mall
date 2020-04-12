@@ -1,7 +1,7 @@
 <template>
   <div>
-    <van-sidebar v-model="activeKey">
-      <van-sidebar-item v-on:click="sendMsg(item.id)" v-for='(item,index) in tabs' :key="index" :title="item.name+'手机'" v-trigger="index"/>
+    <van-sidebar v-model="activeKey" :active-key="aKey">
+      <van-sidebar-item v-on:click="sendMsg(item)" v-for='(item,index) in tabs' :key="index" :title="item.name+'手机'" v-trigger="index"/>
     </van-sidebar>
     <!-- <div>{{is}}</div> -->
   </div>
@@ -20,6 +20,7 @@ export default {
   data () {
     return {
       activeKey: 0,
+      aKey:0,
       tabs:[]
     }
   },
@@ -31,7 +32,7 @@ export default {
       getCategoryTab().then(result=>{
         if(result)
       {
-          this.tabs=result.data;
+        this.tabs=result.data;
         console.log(this.tabs);
          this.$store.dispatch("categoryTab/invokeSetItems",this.tabs[0].id);
         // console.log(this.tabs[0]);
@@ -39,8 +40,8 @@ export default {
      
       })
     },
-    sendMsg:function(id){
-      bus.$emit("TabId",id);
+    sendMsg:function(item){
+      bus.$emit("TabItem",item);
     }
   },
   mounted(){

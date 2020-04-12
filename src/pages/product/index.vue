@@ -5,145 +5,56 @@
         <van-icon name="arrow-left" size="30" class="product-icon" />
         <van-swipe @change="onChange">
           <van-swipe-item v-for="(image,index) in images" :key="index" :style="[obj,obj1]">
-            <img v-lazy="image" class="swipe-img" @click="productImgClick()" />
+            <img v-lazy="image.url" class="swipe-img" @click="productImgClick()" />
           </van-swipe-item>
           <div class="custom-indicator" slot="indicator">
-            {{current+1}}/4
+            {{current+1}}/{{size}}
           </div>
         </van-swipe>
         <div class="product-detail">
-          <p class="product-name">小米9</p>
-          <p class="product-comment">4G双卡全网通高速网络/骁龙855Plus期间处理器</p>
-          <p class="product-price">¥<span>3799</span></p>
+          <p class="product-name">{{product.name}}</p>
+          <p class="product-comment">{{product.briefIntro}}</p>
+          <p class="product-price">¥<span>{{product.shopPrice}}</span></p>
         </div>
         <!-- product-detail -->
         <div class="product-intro">
           <van-tabs v-model="active" scrollspy sticky>
-            <van-tab>
+            <van-tab v-for="(item,index) in icon" :key="index">
               <div slot="title">
                 <van-cell is-link @click="showPopup">
-                  <van-icon name="smile-o" size="20" class="product-intro-icon" />
-                  <span class="product-span">CPU型号</span>
+                  <van-icon :name="item.icon" size="20" class="product-intro-icon" />
+                  <span class="product-span">{{item.name}}</span>
                 </van-cell>
                 <van-popup v-model="trunOn" round position="bottom" :style="{ height: '80%' }">
                   <div class="PI-detail">
-                    <p>关键参数</p>
-                     <p>CPU型号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                        <p>CPU主频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高2.4GHz</p>
-                         <p>后置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                           <p>前置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                             <p>屏幕尺寸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                <p>屏幕分辨率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                  <p>运行内存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                     <p>存储容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                        <p>电池容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                         <p>网络类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                           <p>网络模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                             <p>机身厚度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>              
+                    <p class="title">关键参数</p>
+                     <p v-for="(item,index) in detailArr" :key="index">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.details}}</p>
                   </div>
                 </van-popup>
-              </div>
-            </van-tab>
-            <van-tab>
-              <div slot="title">
-                <van-cell is-link @click="showPopup">
-                  <van-icon name="diamond-o" size="20" class="product-intro-icon" />
-                  <span class="product-span">超长待机</span>
-                </van-cell>
-                <van-popup v-model="trunOn" round position="bottom" :style="{ height: '80%' }">
-                  <div class="PI-detail">
-                    <p>关键参数</p>
-                     <p>CPU型号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                       <p>CPU主频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高2.4GHz</p>
-                         <p>后置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                           <p>前置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                             <p>屏幕尺寸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                <p>屏幕分辨率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                  <p>运行内存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                     <p>存储容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                        <p>电池容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                         <p>网络类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                           <p>网络模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                             <p>机身厚度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>                    
-                  </div></van-popup>
-              </div>
-            </van-tab>
-            <van-tab>
-              <div slot="title">
-                <van-cell is-link @click="showPopup">
-                  <van-icon name="expand-o" size="20" class="product-intro-icon" />
-                  <span class="product-span">高清拍摄</span>
-                </van-cell>
-                <van-popup v-model="trunOn" round position="bottom" :style="{ height: '80%' }">
-                  <div class="PI-detail">
-                    <p>关键参数</p>
-                    <p>CPU型号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                      <p>CPU主频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高2.4GHz</p>
-                         <p>后置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                           <p>前置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                             <p>屏幕尺寸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                <p>屏幕分辨率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                  <p>运行内存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                     <p>存储容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                        <p>电池容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                         <p>网络类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                           <p>网络模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                             <p>机身厚度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>              
-                  </div></van-popup>
-              </div>
-            </van-tab>
-            <van-tab>
-              <div slot="title">
-                <van-cell is-link @click="showPopup">
-                  <van-icon name="good-job-o" size="20" class="product-intro-icon" />
-                  <span class="product-span">超大屏幕</span>
-                </van-cell>
-                <van-popup v-model="trunOn" round position="bottom" :style="{ height: '80%' }">
-                  <div class="PI-detail">
-                    <p>关键参数</p>
-                     <p>CPU型号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                       <p>CPU主频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高2.4GHz</p>
-                         <p>后置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                           <p>前置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                             <p>屏幕尺寸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                <p>屏幕分辨率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                  <p>运行内存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                     <p>存储容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                        <p>电池容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                         <p>网络类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                           <p>网络模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                             <p>机身厚度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>              
-                  </div></van-popup>
-              </div>
-            </van-tab>
-            <van-tab>
-              <div slot="title">
-                <van-cell is-link @click="showPopup">
-                  <van-icon name="eye-o" size="20" class="product-intro-icon" />
-                  <span class="product-span">屏幕分辨率</span>
-                </van-cell>
-                <van-popup v-model="trunOn" round position="bottom" :style="{ height: '80%' }"><div class="PI-detail">
-                    <p>关键参数</p>
-                     <p>CPU型号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                       <p>CPU主频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最高2.4GHz</p>
-                         <p>后置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                           <p>前置摄像头&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                             <p>屏幕尺寸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                <p>屏幕分辨率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                  <p>运行内存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                     <p>存储容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                        <p>电池容量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>
-                                         <p>网络类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                           <p>网络模式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p> 
-                                             <p>机身厚度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;骁龙765G</p>              
-                  </div></van-popup>
               </div>
             </van-tab>
           </van-tabs>
         </div>
         <div class="product-sku">
-          <van-sku v-model="showBase" :sku="skuData.sku" :goods="skuData.goods_info" :goods-id="skuData.goods_id" :hide-stock="skuData.sku.hide_stock" :quota="skuData.quota" :quota-used="skuData.quota_used" :initial-sku="initialSku" reset-stepper-on-hide reset-selected-sku-on-hide disable-stepper-input :close-on-click-overlay="closeOnClickOverlay" :custom-sku-validator="customSkuValidator" @buy-clicked="onBuyClicked" @add-cart="onAddCartClicked" />
-          <van-row class="row-height line" @click="showBase = true">
+            <!-- :initial-sku="initialSku"  -->
+          <van-sku 
+          v-model="showBase" 
+          :sku="skuDataList.sku" 
+          :goods="skuDataList.goods_info" 
+          :goods-id="skuDataList.goods_id" 
+          :hide-stock="skuDataList.sku.hide_stock" 
+          :quota="skuDataList.quota" 
+          :quota-used="skuDataList.quota_used" 
+        
+          reset-stepper-on-hide 
+          reset-selected-sku-on-hide 
+          disable-stepper-input 
+          :close-on-click-overlay="closeOnClickOverlay" 
+          :custom-sku-validator="customSkuValidator" 
+          @buy-clicked="onBuyClicked" 
+          @add-cart="onAddCartClicked"/>
+
+          <van-row class="row-height line" @click="showBase = true;skuDetail()">
             <van-col span="4" offset="1">已选</van-col>
             <van-col span="12" offset="2">小米9紫色x1</van-col>
             <van-col span="6" offset="5" class="product-choice-icon">
@@ -160,7 +71,7 @@
               </van-col>
             </van-row>
           </van-cell>
-          <van-popup v-model="Sshow" closeable round position="bottom" :style="{ height: '66%' }"> 内容</van-popup>
+          <van-popup v-model="Sshow" closeable round position="bottom" :style="{ height: '66%' }" class="sendAddress"> 内容</van-popup>
           <van-row class="row-height">
             <van-col span="6" offset="1">
               <van-icon name="passed" color="orange" />本店自营</van-col>
@@ -179,56 +90,19 @@
       <!-- 商品栏的 -->
       <van-tab title="评价" name="comment">
         <div class="comment-box">
-          <div class="box">
+          <div class="box" v-for="(item,index) in realC" :key="index">
             <div class="comment-person-pic">
-              <img src="./mi9.jpg">
+              <img :src=item.userPic[0].url>
             </div>
-            <div class="comment-name">习惯不曾习惯的习惯</div>
-            <p class="comment-date">2019-06-20</p>
-            <p class="comment-details">贴膜后挺好的，挺高清的</p>
+            <div class="comment-name">{{item.user.name}}</div>
+            <p class="comment-date">{{item.time}}</p>
+            <p class="comment-details">{{item.content}}</p>
             <div class="comment-img">
-              <img src="./mi9.jpg" alt="">
-              <img src="./mi9.jpg" alt="">
-            </div>
-          </div>
-              <div class="box">
-            <div class="comment-person-pic">
-              <img src="./mi9.jpg">
-            </div>
-            <div class="comment-name">习惯不曾习惯的习惯</div>
-            <p class="comment-date">2019-06-20</p>
-            <p class="comment-details">贴膜后挺好的，挺高清的</p>
-            <div class="comment-img">
-              <img src="./mi9.jpg" alt="">
-              <img src="./mi9.jpg" alt="">
-            </div>
-          </div>
-              <div class="box">
-            <div class="comment-person-pic">
-              <img src="./mi9.jpg">
-            </div>
-            <div class="comment-name">习惯不曾习惯的习惯</div>
-            <p class="comment-date">2019-06-20</p>
-            <p class="comment-details">贴膜后挺好的，挺高清的</p>
-            <div class="comment-img">
-              <img src="./mi9.jpg" alt="">
-              <img src="./mi9.jpg" alt="">
-            </div>
-          </div>
-              <div class="box">
-            <div class="comment-person-pic">
-              <img src="./mi9.jpg">
-            </div>
-            <div class="comment-name">习惯不曾习惯的习惯</div>
-            <p class="comment-date">2019-06-20</p>
-            <p class="comment-details">贴膜后挺好的，挺高清的</p>
-            <div class="comment-img">
-              <img src="./mi9.jpg" alt="">
-              <img src="./mi9.jpg" alt="">
+              <img :src="pic.url" alt="" v-for="(pic,picIndex) in item.pictures"  :key="picIndex">
             </div>
           </div>
         </div>
-       <router-link to="/comment/1">
+       <router-link :to="{name:'comment',params:{id:this.id}}">
           <p class="comment-more">
           更多评论<van-icon name="play" color="	#00008B"/>
         </p>
@@ -237,7 +111,7 @@
       <van-tab title="详情" name="details">
         <!-- <img src="./timg.jfif"> -->
         <div class="details-img">
-            <img src="./timg.jpg" alt="">
+            <img :src="itemAd.url" alt="" v-for="(itemAd,indexAd) in adPic" :key="indexAd">
         </div>
         <p class="comment-intro">
           <span>划线价:</span>&nbsp;&nbsp;&nbsp;商品展示的划线价格为参考价，该价格可能是品牌专柜标价，商品吊牌或由品牌提供商的正品零售价（如厂商指导价，建议零售价等）；由于地区，市场，时间等和市场行情波动，品牌的专柜价格，吊牌价与您购买时展示的不一致，该价格仅供参考。
@@ -310,7 +184,10 @@
 <script>
 import Vue from 'vue';
 import { Sku, Col, Row, Swipe, SwipeItem, Lazyload, Icon, ImagePreview, Tab, Tabs, Popup, Cell, CellGroup,GoodsAction, GoodsActionIcon, GoodsActionButton  } from 'vant';
-
+import skuData from './data.js';
+import {getProductById} from '../../api/getProductDetail.js';
+import {getSkuById} from '../../api/getSkuById.js';
+import {getComment} from '../../api/getComment.js';
 Vue.use(Swipe)
   .use(SwipeItem)
   .use(Lazyload)
@@ -327,20 +204,22 @@ Vue.use(Swipe)
   .use(GoodsAction)
   .use(GoodsActionButton)
   .use(GoodsActionIcon);
-import skuData from './data.js';
+
 
 export default {
   name: "Product",
   data () {
     return {
+      name:["CPU型号","CPU主频","后置摄像头","前置摄像头","屏幕尺寸","屏幕分辨率","运行内存","存储容量","电池容量","网络类型","网络模式","机身厚度"],
+      // 详细的介绍
+      detail:'',
+      detailArr:[],
+      icon:[{"icon":"smile-o","name":"超长待机"},{"icon":"diamond-o","name":"高清拍摄"},{"icon":"expand-o","name":"超大屏幕"},{"icon":"good-job-o","name":"屏幕分辨率"},{"icon":"eye-o","name":"高清拍摄"}],
+      // banner图的张数
+      size:0,
       current: 0,
       show: false,
-      images: [
-        require("./mi9.jpg"),
-        require("./mi9.jpg"),
-        require("./mi9.jpg"),
-        require("./mi9.jpg")
-      ],
+      images: [],
       titles: [
         "商品",
         "评价",
@@ -360,17 +239,27 @@ export default {
       Sshow: false,
       s: false,
       skuData: skuData,
-      showBase: true,
+      showBase: false,
       showCustom: false,
       showStepper: false,
       showSoldout: false,
       closeOnClickOverlay: true,
+      id:'',
+      pic:[],
+      banner:[],
+      product:{},
       initialSku: {
         s1: '30349',
         s2: '1193',
         selectedNum: 3
       },
+      choiceList:[],
+      comment:[],
+      realC:[],
+      adPic:[],
       customSkuValidator: () => '请选择xxx!',
+      skuDataList:{},
+      resSku:[]
     }
   },
   methods: {
@@ -378,7 +267,7 @@ export default {
       this.current = index;
     },
     productImgClick () {
-      ImagePreview(this.images);
+      ImagePreview(this.banner);
     },
     showPopup () {
       this.trunOn = true;
@@ -398,7 +287,132 @@ export default {
     },
     onClickButton() {
       Toast('点击按钮');
+    },
+    getProduct(){
+      getProductById(this.id).then(res=>{
+          if(res){
+            console.log("hhh")
+            console.log(res);
+            this.product=JSON.parse(JSON.stringify(res.data));
+            // this.detail=JSON.parse(JSON.stringify(res.data.detail));
+             this.detail=JSON.parse(JSON.stringify(res.data.detailIntro));
+             this.detailArr=this.detail.split(',')
+             console.log(this.detailArr);
+             let arr1=[];
+             this.detailArr.forEach(element=>{
+                console.log('enter2');
+                  var json={
+                 "details":element
+               }
+               arr1.push(json);
+             })
+             console.log(arr1)
+             console.log('wwwwwwwwwwwwwwwwwwwwwwww')
+             console.log(this.name);
+             for(var i=0;i<this.name.length;i++){
+               arr1[i]["name"]=this.name[i];
+             }
+
+             console.log('arr1');
+             console.log(arr1);
+             this.detailArr=JSON.parse(JSON.stringify(arr1));
+             console.log('qqqqqqqqqqqqq')
+             console.log(this.detailArr);
+            console.log(this.detail);
+            console.log(this.product);
+            this.pic=JSON.parse(JSON.stringify(res.data.pictures));
+            console.log(this.pic);
+            this.pic.forEach(element=>{
+              if(element.pictureStatus=="01"){
+                this.images.push(element);
+                this.banner.push(element.url);
+              }
+              if(element.pictureStatus=="02"){
+                this.adPic.push(element);
+              }
+            })
+           
+            console.log(this.images);
+            this.size=this.images.length;
+          }
+      })
+    },
+    skuDetail(){
+     console.log('hhh我')
+      getSkuById(this.id).then(res=>{
+          if(res)
+          {
+            console.log('我得到了sku的信息')
+            this.resSku=res.data.skuList;
+             console.log(this.resSku);
+             let proChoic=[];
+            // this.resSku.forEach(element=>{
+            //   proChoic.push(element.propertyChoices);
+            // })
+            // console.log(proChoic);
+
+               this.resSku.forEach(element=>{
+              element.propertyChoices.forEach(e=>{
+                proChoic.push(e);
+              })
+            })
+            console.log('我的妈')
+             console.log(proChoic);
+              // let pro=new Set();
+              // let proName=new Set();
+          
+              let o={}
+             proChoic.forEach(e=>{
+              pro.set(e.property.name,''+e.propertyId);
+              // o.set(e.property.name,''+e.name);
+              if(o[e.property.name]&&e.name!=o[e.property.name].split("  ")[1].substr(5)){
+                console.log('')
+                o[e.property.name]+=','+'id:'+e.id+'  name:'+e.name
+              }
+              else{
+                  o[e.property.name]='id:'+e.id+'  name:'+e.name;
+              }
+
+             })
+            //  console.log(pro);
+             console.log(o);
+            //  console.log(proName);
+           
+          }
+      })
+    },
+    getCommentList(){
+      console.log('我是comment的')
+      console.log(this.id);
+      getComment(this.id).then(res=>{
+        if(res)
+        {
+          console.log(res.data);
+          this.comment.push(res.data);
+          console.log('暂时的数据')
+          console.log(this.comment);
+          var arr=[];
+          console.log(this.comment instanceof(Array));
+        if(this.comment[0].comments.length>=3);
+         arr=this.comment[0].comments.slice(0,3);
+          console.log('截取出来的');
+           console.log(arr);
+           this.realC=JSON.parse(JSON.stringify(arr));
+           console.log(this.realC);
+        }
+      })
     }
+  },
+  created(){
+    // 这里获取router-link传过来的id
+    this.id=this.$route.params.id;
+  console.log('我是id');
+    console.log(this.id);
+    this.getProduct();
+    this.getCommentList();
+    this.skuDataList=JSON.parse(JSON.stringify(skuData));
+    console.log('我是赋值以后的结果')
+    console.log(this.skuDataList)
   }
 }
 </script>
@@ -479,13 +493,13 @@ export default {
   /* padding-top: 20px; */
   height: 50px;
 }
-.van-cell {
+.product .van-cell {
   padding: 0;
 }
-.van-cell__right-icon {
+.product .van-cell__right-icon {
   display: none;
 }
-.product-sku {
+.product .product-sku {
   width: 95%;
   border-radius: 10px;
   background-color: rgba(245, 245, 245);
@@ -493,14 +507,14 @@ export default {
   border: 1px solid rgba(220, 220, 220);
   overflow: hidden;
 }
-.van-row {
+.product .van-row {
   position: relative;
 }
-.product-choice-icon {
+.product .product-choice-icon {
   position: absolute;
   right: -66px;
 }
-.row-height {
+.product .row-height {
   padding-top: 4px;
   padding-bottom: 5px;
   height: 30px;
@@ -508,13 +522,13 @@ export default {
   color: #808080;
   font-size: 15px;
 }
-.line {
+.product .line {
   border-bottom: 1px solid rgba(220, 220, 220);
 }
-.van-popup--bottom {
+.product .van-popup--bottom {
   text-align: center;
 }
-.box {
+.product .box {
   width: 250px;
   height: 150px;
   background-color: rgba(245, 245, 245);
@@ -525,69 +539,69 @@ export default {
   border: 1px solid rgba(220, 220, 220);
   border-radius: 10px;
 }
-.comment-box {
+.product .comment-box {
   display: -webkit-box;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   /* -webkit-overflow-scrolling: touch; */
 }
-.comment-box::-webkit-scrollbar{
+.product .comment-box::-webkit-scrollbar{
   display: none;
 }
-.comment-person-pic{
+.product .comment-person-pic{
   width: 50px;
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
   margin:10px;
 }
-.comment-person-pic img{
+.product .comment-person-pic img{
   width: 100%;
   height: 100%;
 }
-.comment-name{
+.product .comment-name{
   position: absolute;
   left: 30%;
   top: 10px;
 }
-.comment-date{
+.product .comment-date{
   position: absolute;
   left: 30%;
   top: 40px;
 }
-.comment-details{
+.product .comment-details{
   position: absolute;
   left: 10%;
   top: 70px;
 }
-.comment-img{
+.product .comment-img{
   position: absolute;
   left: 10%;
   top:80px;
   width: 150px;
   height: 40px;
 }
-.comment-img img{
+.product .comment-img img{
   margin-top: 20px;
   width:45%;
   height: 100%;
 }
-.comment-more{
+.product .comment-more{
     width: 25%;
     margin: 0 auto;
     color:	#00008B;
 }
-.comment-intro{
+.product .comment-intro{
   margin: 30px 10px;
   font-size: 13px;
   color:  rgba(220, 220, 220);
 
 }
-.comment-intro span{
+.product .comment-intro span{
   font-weight: bold;
   color: black;
 }
-.details-img{
+.product .details-img{
   margin-top: 30px;
   width: 100%;
   height: auto;
@@ -596,21 +610,21 @@ export default {
 .details-img img{
   width: 100%;
 }
-.recommend-title{
+.product .recommend-title{
   margin:30px 10px;
   padding-top: 30px;
   font-size: 18px;
   font-weight: bold;
 }
-.recommend{
+.product .recommend{
   background-color: #eee;
 }
-.recommend-goods{
+.product .recommend-goods{
   width: 95%;
   margin:0 auto;
   overflow: hidden;
 }
-.re-good{
+.product .re-good{
   width: 45%;
   height: 250px;
   background-color: white;
@@ -619,17 +633,34 @@ export default {
   margin:5px;
   display: inline-block;
 }
-.re-good img{
+.product .re-good img{
   width: 100%;
   height: 60%
 }
-.recommend-intro,.recommend-price{
+.product .recommend-intro,.recommend-price{
   margin:10px;
 }
-.recommend-price{
+.product .recommend-price{
   color: red;
 }
 /* .van-tabbar--fixed{
   display: none;
 } */
+/* .demo-sku {
+  .sku-container {
+    padding: 0 15px;
+  }
+} */
+.product .van-popup--bottom{
+  text-align:left;
+}
+.product .sendAddress.van-popup--bottom{
+  text-align:center;
+}
+.product .title{
+  text-align: center;
+}
+.product .van-tabs__line{
+  background-color: transparent !important;
+}
 </style>
